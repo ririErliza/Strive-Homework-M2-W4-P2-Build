@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz</title>
+    <style>
+        body {
+        background-color: white;
+        margin: 0;
+        font-size: 1em;
+        font-family: "Work Sans", sans-serif;
+        }
+
+        section{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        img{
+            width:530px;
+            margin-top: 30px;
+            
+        }
+
+        #container{
+            max-width: 620px;
+            margin: 0 auto;
+            padding: 0 15px;
+            background-color: white;
+            border: 2px solid rgb(29, 177, 24);
+        }
+
+        h3{
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .question{
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-weight: bold;
+            color: darkblue;
+        }
+
+        .answers {
+            margin-bottom: 30px;
+            margin-right: 10px;
+            font-size: 0.9em;
+        }
+
+        #submit{
+            font-size: 20px;
+            background-color: goldenrod;
+            border: 0px;
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        footer{
+            font-size: 0.8em;
+            float:right;
+            margin-top:10px;
+        }
+    </style>
+</head>
+<body>
+
+    <section>
+        <img src="https://thumbs.dreamstime.com/b/quiz-44060147.jpg">
+    </section>
+    <div id="container">
+        <h3>Simple Multiple-Choice Quiz</h3>
+        <div id="quiz">  </div>  <!-- this is where the questions appear -->
+        <button id="submit"> Submit </button> <!-- this is submit button (clicked after answering all the questions) -->
+        <div id="results"> </div> <!-- this is where the results appear -->
+
+
+        <footer>E.E 2022</footer>
+    </div>
+
+    <script>
+        const questions = [
+        {
+            question: "1. In 1768, Captain James Cook set out to explore which ocean?",
+            answers:{
+                a:"Pacific Ocean",
+                b:"Atlantic Ocean",
+                c:"Indian Ocean",
+                d:"Arctic Ocean",
+            },
+            correctAnswer:"a"
+        },
+        {
+            question: "2. What is actually electricity?",
+            answers:{
+                a:"A flow of water",
+                b:"A flow of air",
+                c:"A flow of electrons",
+                d:"A flow of atoms",
+            },
+            correctAnswer:"c"
+        },
+        {
+            question: "3. Which of the following is NOT an international organisation?",
+            answers:{
+                a:"FIFA",
+                b:"NATO",
+                c:"ASEAN",
+                d:"FBI",
+            },
+            correctAnswer:"d"
+        },
+        {
+            question: "4. Which of the following disorders is the fear of being alone?",
+            answers:{
+                a:"Agoraphobia",
+                b:"Aerophobia",
+                c:"Acrophobia",
+                d:"Arachnophobia",
+            },
+            correctAnswer:"a"
+        },
+        {
+            question: "5. Which of the following is a song by the German heavy metal band “Scorpions”?",
+            answers:{
+                a:"Stairway to Heaven",
+                b:"Wind of Change",
+                c:"Don't Stop Me Now",
+                d:"Hey Jude",
+            },
+            correctAnswer:"b"
+        },
+        {
+            question: "6. What is the speed of sound?",
+            answers:{
+                a:"120 km/h",
+                b:"1,200 km/h",
+                c:"400 km/h",
+                d:"700 km/h",
+            },
+            correctAnswer:"b"
+        },
+        {
+            question: "7. Which is the easiest way to tell the age of many trees?",
+            answers:{
+                a:"To measure the width of the tree",
+                b:"To count the rings on the trunk",
+                c:"To count the number of leaves",
+                d:"To measure the height of the tree",
+            },
+            correctAnswer:"b"
+        },
+        {
+            question: "8. What do we call a newly hatched butterfly?",
+            answers:{
+                a:"A moth",
+                b:"A butter",
+                c:"A caterpillar",
+                d:"A chrysalis",
+            },
+            correctAnswer:"c"
+        },
+        {
+            question: "9. In total, how many novels were written by the Bronte sisters?",
+            answers:{
+                a:"7",
+                b:"8",
+                c:"6",
+                d:"I don't know",
+            },
+            correctAnswer:"a"
+        },
+        {
+            question: "10. What is the main component of the sun?",
+            answers:{
+                a:"Liquid lava",
+                b:"Gas",
+                c:"Molten iron",
+                d:"Rock",
+            },
+            correctAnswer:"b"
+        },
+        ];
+
+        // create variables to get the elements from html
+        let quizContainer = document.getElementById("quiz");
+        let submitButton = document.getElementById("submit");
+        let resultsContainer = document.getElementById("results");
+
+        // create function to create the quiz (this will collect the answers and work out the results)
+        makeQuiz(questions, quizContainer, resultsContainer, submitButton)
+       function makeQuiz(questions, quizContainer, resultsContainer, submitButton){
+           
+           // create another function inside makeQuiz function to show questions & create variables to make the quiz and the answers (multiple choice) appears on screen
+           function showQuestions(questions, quizContainer){
+               let output = [];
+               let answers;
+            
+            // using loop to grab the questions and answers from questions array
+               for (i=0; i<questions.length; i++){  // which questions to look at
+                   answers = [];
+                   for (letter in questions[i].answers){  // which answer to look at
+                       answers.push(  // .push here adds each answer to the variable 'answers' to create the results
+                           "<label>"+ 
+                           "<input type='radio' name='question" +i + "'value='" +  //radio button for multiple choice
+                           letter + "'>"+
+                           letter + ".  " +
+                           questions[i].answers[letter] + "   " +
+                           "</label>"
+                       );
+                   }
+                    // add each question and answers to the output
+                   output.push(
+                       "<div class='question'>" + questions[i].question + "</div>" + 
+                       "<div class='answers'>" + answers.join("")+ "</div>"
+                   );
+               }
+               //add the results for each question together
+               quizContainer.innerHTML = output.join("")  
+           }
+
+           // make function to show quiz 
+           // add more variables to collect actual answers from quizContainer, to collect user answers, & to collect user's score (number that answered correctly)
+           function showResults(questions, quizContainer, resultsContainer){
+               let answerContainers = quizContainer.querySelectorAll(".answers");
+               let userAnswer="";
+               let numCorrect=0;
+
+                // using for loop to find which answer the user selected
+               for (i=0; i<questions.length; i++){
+                   userAnswer = (answerContainers[i].querySelector("input[name=question" + i +"]:checked")||{}).value;
+
+                   // add conditional - what to do when answer is wrong and when answer is correct
+                   if (userAnswer === questions[i].correctAnswer){
+                       numCorrect++;
+                       answerContainers[i].style.color ="green";
+                   }else{
+                       answerContainers[i].style.color = "orange";
+                   }
+               }
+               // line to show on page when user finished quiz and click submit button
+               resultsContainer.innerHTML = " You have answered CORRECTLY  " + numCorrect + " out of  " + questions.length;
+           }
+           //show all questions at once (on one page)
+           showQuestions(questions, quizContainer); 
+           
+           // show the results when user clicks the submit button
+           submitButton.onclick = function(){ 
+               showResults (questions, quizContainer, resultsContainer);
+           }
+
+       }
+       
+        </script>
+</body>
+</html>
